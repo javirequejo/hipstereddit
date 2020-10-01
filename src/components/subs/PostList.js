@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {Fragment, useState, useEffect} from 'react'
 import styled from 'styled-components'
 import {getPostList} from '../../services/post-service'
 import PostCard from './PostCard'
@@ -8,9 +8,14 @@ const PostListContainer = styled.div`
     flex-flow: row wrap;
 `
 
+const PostListTitle = styled.h1`
+    text-align: center;
+    font-size: 1.5em;
+    font-weight: bold;
+`
+
 const PostList = props => {
     const [postList, setPostList] = useState([])
-    const [error, setError] = useState(null)
     
     useEffect(() => {
         const getList = async () => {
@@ -24,12 +29,16 @@ const PostList = props => {
     }, [])
 
     return (
-        <PostListContainer>
-            {postList.length > 0 && postList.map(elem => {
-                const post = elem.data
-                return (<PostCard key={post.id} post={post} />)
-            })}
-        </PostListContainer>
+        <Fragment>
+            <PostListTitle>/r/{props.subId}</PostListTitle>
+            <PostListContainer>
+                {postList.length > 0 && postList.map(elem => {
+                    const post = elem.data
+                    console.log(post)
+                    return (<PostCard key={post.id} post={post} />)
+                })}
+            </PostListContainer>
+        </Fragment>
     )
 }
 
