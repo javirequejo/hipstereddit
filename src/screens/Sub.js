@@ -1,10 +1,11 @@
 import React from 'react'
-import PostList from '../components/posts/PostList'
+import { useParams } from 'react-router-dom'
+import PostList from '../components/subs/PostList'
 
 const Sub = () => {
     return (
         <div>
-            <PostList />
+            <PostList subId={useParams().subId} />
         </div>
     )
 }
