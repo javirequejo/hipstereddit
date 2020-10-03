@@ -5,7 +5,7 @@ const postService = axios.create({
 })
 
 const getPostList = async r => {
-    const list = await postService.get(`${r}.json`)
+    const list = await postService.get(`${r}.json?limit=100&sort=new`)
     if (Object.keys(list).length > 0) return list.data.data.children
     else return []
 }

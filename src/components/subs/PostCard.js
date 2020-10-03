@@ -5,6 +5,7 @@ const PostCardContainer = styled.div`
     display: flex;
     flex-flow: column nowrap;
     justify-content: space-between;
+    flex-grow: 1;
     width: 24rem;
     margin: 1rem;
     padding: 1rem;
@@ -14,8 +15,10 @@ const PostCardContainer = styled.div`
 
 const PostHeader = styled.div`
     display: flex;
-    flex-flow: row nowrap;
+    flex-flow: row-reverse nowrap;
     justify-content: space-between;
+    align-items: center;
+    height: 10rem;
 `
 
 const PostButtonsContainer = styled.div`
@@ -26,7 +29,6 @@ const PostButtonsContainer = styled.div`
 const PostButton = styled.button`
     cursor: pointer;
     font-size: 1em;
-    margin: 1em;
     height: 2rem;
     background-color: #FF5700;
     color: white;
@@ -36,7 +38,8 @@ const PostButton = styled.button`
 `
 
 const PostThumbnail = styled.img`
-    max-width: 5rem;
+    max-width: ${props => props.logoholder ? '5rem' : '10rem'};
+    max-height: ${props => props.logoholder ? '5rem' : '10rem'};
     padding: 1rem;
 `
 
@@ -50,7 +53,7 @@ const PostTitle = styled.h3`
 `
 
 const PostDescription = styled.p`
-    text-align: center;
+    text-align: left;
     font-size: 1.2em;
 `
 
@@ -66,28 +69,25 @@ const PostAuthor = styled.span`
 const PostTag = styled.span`
 `
 
-const openLinkButton = (event, url) => {
-    event.preventDefault()
-    window.open(url, "_blank")
-}
-
 const PostCard = props => {
-    const {post} = props
+    const {permaLink, hasImg, imgUrl, title, author, description, tag} = props
     return (
         <PostCardContainer>
             <PostHeader>
-                {post.url.includes('jpg') && (<PostThumbnail src={post.url} />)}
                 <PostButtonsContainer>
-                    <PostButton onClick={(e) => openLinkButton(e, post.url)}>Source</PostButton>
+                    <a href={permaLink} target='_blank' rel="noopener noreferrer">
+                        <PostButton>Source</PostButton>
+                    </a>
                 </PostButtonsContainer>
+                <PostThumbnail logoHolder={!hasImg} src={imgUrl} />
             </PostHeader>
             <PostBody>
-                <PostTitle>{post.title}</PostTitle>
-                <PostDescription>{post.selftext.slice(0,200)}</PostDescription>
+                <PostTitle>{title}</PostTitle>
+                <PostDescription>{description.slice(0,200)}</PostDescription>
             </PostBody>
             <PostFooter>
-                <PostAuthor>Author: {post.author}</PostAuthor>
-                {post.link_flair_text && (<PostTag>#{post.link_flair_text}</PostTag>)}
+                <PostAuthor>Author: {author}</PostAuthor>
+                {tag && (<PostTag>#{tag}</PostTag>)}
             </PostFooter>
         </PostCardContainer>
     )
