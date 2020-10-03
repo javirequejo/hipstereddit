@@ -37,12 +37,12 @@ const PostList = props => {
                 {postList.length > 0 && postList.map(elem => {
                     const post = elem.data
                     console.log(post)
-                    const hasImg = post.url.includes('jpg')
-                    const imgUrl = hasImg ? post.url : redditLogo
+                    const putLogo = !post.url.includes('jpg')
+                    const imgUrl = !putLogo ? post.url : redditLogo
                     return (<PostCard 
                         key={post.id} 
                         permalink={`https://reddit.com${post.permalink}`}
-                        hasImg={hasImg}
+                        putLogo={putLogo}
                         imgUrl={imgUrl}
                         title={post.title}
                         author={post.author}

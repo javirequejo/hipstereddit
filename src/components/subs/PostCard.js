@@ -2,15 +2,20 @@ import React from 'react'
 import styled from 'styled-components'
 
 const PostCardContainer = styled.div`
+    background-color: #eae2b7;
     display: flex;
     flex-flow: column nowrap;
     justify-content: space-between;
     flex-grow: 1;
-    width: 24rem;
-    margin: 1rem;
+    width: 18rem;
+    margin: 2rem;
     padding: 1rem;
     border: 1px solid;
     border-radius: 1rem;
+    :hover {
+        transition: all .1s ease-in-out;
+        transform: scale(1.05);
+    }
 `
 
 const PostHeader = styled.div`
@@ -26,20 +31,15 @@ const PostButtonsContainer = styled.div`
     flex-flow: row nowrap;
 `
 
-const PostButton = styled.button`
+const PostButton = styled.a`
     cursor: pointer;
-    font-size: 1em;
-    height: 2rem;
-    background-color: #FF5700;
-    color: white;
-    padding: 0.25em 1em;
-    border: 2px solid;
-    border-radius: 3px;
+    padding: 1rem;
+    border-radius: 1rem;
 `
 
 const PostThumbnail = styled.img`
-    max-width: ${props => props.logoholder ? '5rem' : '10rem'};
-    max-height: ${props => props.logoholder ? '5rem' : '10rem'};
+    max-width: ${props => props.isLogo ? '5rem' : '10rem'};
+    max-height: ${props => props.isLogo ? '5rem' : '10rem'};
     padding: 1rem;
 `
 
@@ -49,12 +49,10 @@ const PostBody = styled.div`
 
 const PostTitle = styled.h3`
     text-align: left;
-    font-size: 1.2em;
 `
 
 const PostDescription = styled.p`
     text-align: left;
-    font-size: 1.2em;
 `
 
 const PostFooter = styled.div`
@@ -70,16 +68,14 @@ const PostTag = styled.span`
 `
 
 const PostCard = props => {
-    const {permaLink, hasImg, imgUrl, title, author, description, tag} = props
+    const {permaLink, putLogo, imgUrl, title, author, description, tag} = props
     return (
         <PostCardContainer>
             <PostHeader>
                 <PostButtonsContainer>
-                    <a href={permaLink} target='_blank' rel="noopener noreferrer">
-                        <PostButton>Source</PostButton>
-                    </a>
+                    <PostButton href={permaLink} target='_blank' rel="noopener noreferrer">Reddit web</PostButton>
                 </PostButtonsContainer>
-                <PostThumbnail logoHolder={!hasImg} src={imgUrl} />
+                <PostThumbnail isLogo={putLogo} src={imgUrl} />
             </PostHeader>
             <PostBody>
                 <PostTitle>{title}</PostTitle>
